@@ -1,0 +1,23 @@
+*{
+    background-color: antiquewhite;
+}
+
+.contact-box {
+    width: 300px;
+    margin-top: 30px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.contact-info {
+    display: inline-block;
+}
+.buttons {
+    display: inline-block;
+}
+.buttons button {
+    margin-left: 10px;
+}
