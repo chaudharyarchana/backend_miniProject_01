@@ -4,6 +4,20 @@ const path = require("path");
 const loginSchema = require("./models/login");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/images/");
+  },
+  filename: function (req, file, cb) {
+    const extension = path.extname(file.originalname); // get the file extension
+    cb(null, Date.now() + extension); // Add the extension back to the filename
+  },
+});
+
+const upload = multer({ storage: storage });
+
 const saltRounds = 10;
 
 const app = express();
@@ -16,8 +30,17 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
-  res.cookie("hii");
+  res.cookie("hii", "hii");
   res.render("createUserForLogin.ejs");
+});
+
+app.get("/multer", (req, res) => {
+  res.render("multer.ejs");
+});
+
+app.post("/multer", upload.single("avatar"), (req, res) => {
+  console.log(req.file);
+  res.send("done");
 });
 
 app.post("/create", async (req, res) => {
